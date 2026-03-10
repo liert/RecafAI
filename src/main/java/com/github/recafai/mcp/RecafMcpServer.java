@@ -2,6 +2,7 @@ package com.github.recafai.mcp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.recafai.util.QueryUtils;
+import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.json.jackson.JacksonMcpJsonMapper;
 import io.modelcontextprotocol.server.McpAsyncServer;
 import io.modelcontextprotocol.server.McpServer;
@@ -10,7 +11,6 @@ import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportPro
 import io.modelcontextprotocol.spec.McpSchema;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
-import org.apache.commons.text.StringEscapeUtils;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -350,7 +350,7 @@ public class RecafMcpServer {
                         //     logger.error("参数错误：args应该是字符串", e);
                         //     continue;
                         // }
-                        String args = StringEscapeUtils.unescapeJava((String) entry.get("args"));
+                        String args = (String) entry.get("args");
                         logger.info("Invoking: {}.{}({})", className, methodName, args);
                         String plainText = recafInvoke.invoke(className, methodName, args);
                         Map<String, Object> map = new HashMap<>();

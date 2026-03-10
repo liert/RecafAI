@@ -90,8 +90,6 @@ dependencies {
     implementation platform("io.modelcontextprotocol.sdk:mcp:0.14.1")
     implementation platform("io.modelcontextprotocol.sdk:mcp-bom:0.14.1")
 
-    implementation "org.apache.commons:commons-text:1.11.0"
-
     testImplementation platform('org.junit:junit-bom:5.11.2')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
@@ -147,9 +145,6 @@ shadowJar {
         // Reactor依赖
         include(dependency('io.projectreactor:reactor-core'))
         include(dependency('org.reactivestreams:reactive-streams'))
-
-        include { it.moduleGroup == "org.apache.commons" }
-//        include(dependency('org.apache.commons:commons-text'))
 
         include { it.moduleGroup == "org.eclipse.jetty" }
         include(dependency("org.eclipse.jetty.toolchain:jetty-jakarta-servlet-api"))
