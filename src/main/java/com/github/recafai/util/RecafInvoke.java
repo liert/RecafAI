@@ -42,20 +42,29 @@ public class RecafInvoke {
     public String invoke(String className, String methodName, String string) {
         try {
             logger.info("Decrypting: " + className + "." + methodName + "(" + string + ")");
+            logger.info("Decrypt string length: " + string.length());
             Class<?> clazz = loader.loadClass(className.replace('/', '.'));
             for (Method method : clazz.getDeclaredMethods()) {
+                // logger.debug("Invoke " + method.getName());
                 Class<?>[] parameters = method.getParameterTypes();
+                // logger.debug("Parameter length: " + parameters.length);
+                // logger.debug("Parameter types: " + Arrays.toString(parameters));
+                // logger.debug("Return type is String.class: " + parameters[0].equals(String.class));
+                // logger.debug("Result " + (method.getName().equals(methodName) && method.getReturnType().equals(String.class) &&
+                //         method.getParameterCount() == 1 &&
+                //         parameters[0].equals(String.class)));
                 if (method.getName().equals(methodName) &&
                         method.getReturnType().equals(String.class) &&
                         method.getParameterCount() == 1 &&
                         parameters[0].equals(String.class)
                 ) {
-                    String result = (String) method.invoke(loader, string);
-                    return result == null ? "[Recaf] Decrypt Error!" : result;
+                    // logger.debug("条件判断成功");
+                    String result = (String) method.invoke(null, string);
+                    return result == null ? "[Recaf] result == null!" : result;
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return e.getMessage();
         }
         return "[Recaf] Decrypt Error!";
     }

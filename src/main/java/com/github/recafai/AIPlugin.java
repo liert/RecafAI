@@ -1,14 +1,9 @@
 package com.github.recafai;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.recafai.ui.AIClassMenuAdapter;
-import com.github.recafai.ui.AIMethodMenuAdapter;
 import com.github.recafai.util.QueryUtils;
-import io.modelcontextprotocol.json.McpJsonMapper;
 import io.modelcontextprotocol.json.jackson.JacksonMcpJsonMapper;
-import io.modelcontextprotocol.json.schema.JsonSchemaValidator;
 import io.modelcontextprotocol.json.schema.jackson.DefaultJsonSchemaValidator;
-import io.modelcontextprotocol.json.schema.jackson.JacksonJsonSchemaValidatorSupplier;
 import jakarta.annotation.Nonnull;
 import com.github.recafai.mcp.RecafMcpServer;
 import jakarta.enterprise.context.Dependent;
@@ -55,10 +50,6 @@ public class AIPlugin implements Plugin {
         });
 
         FxThreadUtil.run(() -> {
-            contextMenuService.addClassContextMenuAdapter(InstanceManager.getBean(AIClassMenuAdapter.class));
-            contextMenuService.addMethodContextMenuAdapter(InstanceManager.getBean(AIMethodMenuAdapter.class));
-
-            // 注册MCP服务
             InstanceManager.getBean(RecafMcpServer.class).register();
         });
 
